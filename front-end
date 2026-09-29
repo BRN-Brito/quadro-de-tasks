@@ -73,19 +73,19 @@
     
     .td-curta { max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* Lógica visual da barra "Ver Mais" do histórico */
+    /* Lógica da barra "Ver Mais" */
     .linha-oculta { display: none; }
     .btn-expandir-historico { cursor: pointer; color: #2c2f54; font-weight: bold; background-color: #f3f4f6; text-align: center; }
     .btn-expandir-historico:hover { background-color: #e5e7eb; }
 
-    /* Cores atualizadas dos Badges (Status) */
+    /* NOVA PALETA DE CORES DOS STATUS */
     .badge { padding: 4px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; display: inline-block; text-align: center; min-width: 75px; }
-    .badge-nao-iniciado { background-color: #6c757d; color: white; } /* Cinza */
-    .badge-fazendo { background-color: #ffe5a0; color: white; } /* Amarelo */
-    .badge-aguardando { background-color: #ffc8aa; color: white; } /* Laranja */
+    .badge-nao-iniciado { background-color: #ef4444; color: white; } /* Vermelho */
+    .badge-fazendo { background-color: #eab308; color: white; } /* Amarelo */
+    .badge-aguardando { background-color: #f97316; color: white; } /* Laranja */
+    .badge-briefing { background-color: #3b82f6; color: white; } /* Azul */
+    .badge-cancelado { background-color: #a855f7; color: white; } /* Roxo */
     .badge-concluido { background-color: #10b981; color: white; } /* Verde */
-    .badge-cancelado { background-color: #ef4444; color: white; } /* Vermelho */
-    .badge-briefing { background-color: #bfe1f6; color: white; } /* azul */
 
     .acoes-container { display: flex; align-items: center; gap: 10px; }
     .icon-action { cursor: pointer; color: #4b5563; display: flex; align-items: center; }
@@ -183,9 +183,9 @@
     </div>
   </div>
 
-  <!-- CARTÃO: HISTÓRICO (CONCLUÍDAS) -->
+  <!-- CARTÃO: HISTÓRICO (CONCLUÍDAS/CANCELADAS) -->
   <div class="card">
-    <h3 class="card-title">Histórico de Concluídas</h3>
+    <h3 class="card-title">Histórico (Últimas 50)</h3>
     <div class="table-responsive">
       <table>
         <thead>
@@ -206,18 +206,15 @@
       <input type="hidden" id="edit_linha">
       
       <div class="modal-grid">
-        <!-- Linha 1 -->
         <div class="input-group"><label>Data de Criação</label><input type="text" id="edit_data" class="campo-leitura" readonly></div>
         <div class="input-group"><label>Solicitante</label><input type="text" id="edit_solicitante" class="campo-leitura" readonly></div>
-        <div class="input-group"><label>Responsável</label><select id="edit_responsavel"><option value=""></option><option value="Breno">Breno</option><option value="Gabi">Gabi</option><option value="Gui">Gui</option><option value="Ju">Ju</option><option value="Vini">Vini</option><option value="Vito">Vito</option></select></div>
+        <div class="input-group"><label>Responsável</label><input type="text" id="edit_responsavel"></div>
         
-        <!-- Linha 2 -->
         <div class="input-group"><label>Divisão</label><select id="edit_divisao"><option value=""></option><option value="DL">DL</option><option value="DPGP">DPGP</option><option value="DPP">DPP</option><option value="LBD">LBD</option><option value="CORP">CORP</option></select></div>
         <div class="input-group"><label>Marca</label><input type="text" id="edit_marca"></div>
         <div class="input-group"><label>Campanha</label><input type="text" id="edit_campanha"></div>
         
-        <!-- Linha 3 -->
-        <div class="input-group"><label>Tipo de Demanda</label><select id="edit_tipoDemanda"><option value=""></option><option value="Atualizar PM">Atualizar PM</option><option value="Atualizar base">Atualizar base</option><option value="Ajuste Dash">Ajuste Dash</option><option value="Ajuste PV">Ajuste PV</option><option value="Automatização">Automatização</option><option value="Novo PM">Novo PM</option><option value="RM - add dicionario">RM - add dicionario</option><option value="RM dando erro">RM dando erro</option><option value="Outros">Outros</option></select></div>
+        <div class="input-group"><label>Tipo de Demanda</label><select id="edit_tipoDemanda"><option value=""></option><option value="Atualizar PM">Atualizar PM</option><option value="Atualizar base">Atualizar base</option><option value="Ajuste Dash">Ajuste Dash</option><option value="Ajuste PV">Ajuste PV</option><option value="Automatização">Automatização</option><option value="Novo PM">Novo PM</option><option value="RM - add dicionario">RM - add dicionario</option><option value="RM dando erro">RM dando erro</option></select></div>
         <div class="input-group">
           <label>Motivo do Ajuste</label>
           <select id="edit_motivo">
@@ -248,7 +245,6 @@
           </select>
         </div>
         
-        <!-- Linhas Inferiores (Largura Total) -->
         <div class="input-group modal-col-full"><label>Link Associado</label><input type="text" id="edit_link"></div>
         <div class="input-group modal-col-full"><label>Observação Original</label><input type="text" id="edit_observacao"></div>
         <div class="input-group modal-col-full"><label>Detalhamento da Execução</label><input type="text" id="edit_detalhamento"></div>
@@ -267,7 +263,7 @@
     const svgLink = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
 
     var dadosGlobais = [];
-    var historicoExpandido = false; // "Memória" para a seta de collapse
+    var historicoExpandido = false; 
 
     window.onload = carregarDados;
     setInterval(carregarDados, 10000);
@@ -300,9 +296,25 @@
       let htmlAndamento = "";
       let htmlConcluidas = "";
       
-      let limiteConcluidas = 0; 
+      let tarefasAtivas = [];
+      let tarefasConcluidas = [];
 
-      dadosArray.slice().reverse().forEach((linha) => {
+      dadosArray.forEach((linha) => {
+        // Envia "concluído" e "cancelado" para o Histórico
+        if (linha[8] === "concluído" || linha[8] === "cancelado") {
+          tarefasConcluidas.push(linha);
+        } else {
+          tarefasAtivas.push(linha);
+        }
+      });
+
+      // Inverte para exibir histórico do mais novo pro mais velho
+      tarefasConcluidas.reverse();
+
+      // ==========================================
+      // MONTAR TABELA ATIVAS (Mais antigas primeiro)
+      // ==========================================
+      tarefasAtivas.forEach((linha) => {
         let status = linha[8]; 
         let numeroLinhaSheets = linha[13]; 
 
@@ -312,81 +324,86 @@
            dataVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; 
         }
 
-        let dataConclusaoVisual = linha[9] || '-';
-        if (dataConclusaoVisual.includes("-")) {
-           let p = dataConclusaoVisual.split("-");
-           dataConclusaoVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; 
-        }
-
-        // ====== CORES DOS BADGES ======
+        // Mapeamento das Cores Solicitadas
         let badgeClass = "badge-nao-iniciado"; 
         if (status === "fazendo") badgeClass = "badge-fazendo";
         else if (status === "aguardando resposta") badgeClass = "badge-aguardando";
-        else if (status === "concluído") badgeClass = "badge-concluido";
-        else if (status === "cancelado") badgeClass = "badge-cancelado";
         else if (status === "briefing incompleto") badgeClass = "badge-briefing";
         
         let statusHtml = `<span class="badge ${badgeClass}">${status || 'não iniciado'}</span>`;
+        let botaoLink = (linha[6] && linha[6].trim() !== "") ? `<a href="${linha[6]}" target="_blank" class="btn-link-tabela">${svgLink} Acessar Link</a>` : `<span class="btn-link-tabela btn-link-disabled">${svgLink} Acessar Link</span>`;
 
-        let botaoLink = (linha[6] && linha[6].trim() !== "") ? 
-          `<a href="${linha[6]}" target="_blank" class="btn-link-tabela">${svgLink} Acessar Link</a>` : 
-          `<span class="btn-link-tabela btn-link-disabled">${svgLink} Acessar Link</span>`;
-
-        if (status === "concluído") {
-          // Lógica do Histórico Limitado e da Seta Collapse
-          if (limiteConcluidas < 50) {
-            
-            // A partir da 11ª tarefa, ele aplica a classe extra e esconde a linha se a seta estiver recolhida
-            let classeOculta = (limiteConcluidas >= 10) ? "linha-extra-historico" : "";
-            let estiloOculto = (limiteConcluidas >= 10 && !historicoExpandido) ? 'style="display: none;"' : '';
-
-            htmlConcluidas += `
-              <tr class="${classeOculta}" ${estiloOculto}>
-                <td>${dataVisual}</td>
-                <td><strong>${dataConclusaoVisual}</strong></td>
-                <td class="td-curta">${linha[1] || ''}</td>
-                <td class="td-curta">${linha[2] || ''}</td>
-                <td class="td-curta" title="${linha[3] || ''}">${linha[3] || ''}</td>
-                <td class="td-curta">${linha[5] || ''}</td>
-                <td class="td-curta">${linha[7] || ''}</td>
-                <td class="td-curta">${linha[11] || ''}</td>
-                <td>${statusHtml}</td>
-                <td>
-                  <div class="acoes-container">
-                    <span class="icon-action" title="Ver Detalhes" onclick="abrirModal(${numeroLinhaSheets})">${svgEye}</span>
-                    ${botaoLink}
-                  </div>
-                </td>
-              </tr>`;
-            limiteConcluidas++;
-          }
-        } else {
-          // Tarefas ativas aparecem normalmente
-          htmlAndamento += `
-            <tr>
-              <td>${dataVisual}</td>
-              <td class="td-curta">${linha[1] || ''}</td>
-              <td class="td-curta">${linha[2] || ''}</td>
-              <td class="td-curta" title="${linha[3] || ''}">${linha[3] || ''}</td>
-              <td class="td-curta">${linha[4] || ''}</td>
-              <td class="td-curta">${linha[5] || ''}</td>
-              <td class="td-curta">${linha[7] || ''}</td>
-              <td class="td-curta">${linha[11] || ''}</td>
-              <td>${statusHtml}</td>
-              <td>
-                <div class="acoes-container">
-                  <span class="icon-action" title="Ver Detalhes" onclick="abrirModal(${numeroLinhaSheets})">${svgEye}</span>
-                  <span class="icon-action" title="Editar" onclick="abrirModal(${numeroLinhaSheets})">${svgEdit}</span>
-                  ${botaoLink}
-                </div>
-              </td>
-            </tr>`;
-        }
+        htmlAndamento += `
+          <tr>
+            <td>${dataVisual}</td>
+            <td class="td-curta">${linha[1] || ''}</td>
+            <td class="td-curta">${linha[2] || ''}</td>
+            <td class="td-curta" title="${linha[3] || ''}">${linha[3] || ''}</td>
+            <td class="td-curta">${linha[4] || ''}</td>
+            <td class="td-curta">${linha[5] || ''}</td>
+            <td class="td-curta">${linha[7] || ''}</td>
+            <td class="td-curta">${linha[11] || ''}</td>
+            <td>${statusHtml}</td>
+            <td>
+              <div class="acoes-container">
+                <span class="icon-action" title="Ver Detalhes" onclick="abrirModal(${numeroLinhaSheets})">${svgEye}</span>
+                <span class="icon-action" title="Editar" onclick="abrirModal(${numeroLinhaSheets})">${svgEdit}</span>
+                ${botaoLink}
+              </div>
+            </td>
+          </tr>`;
       });
 
-      // Cria a "Seta de Collapse" no final da tabela de histórico caso tenha mais de 10 tarefas
+      // ==========================================
+      // MONTAR TABELA HISTÓRICO (Concluído/Cancelado)
+      // ==========================================
+      let limiteConcluidas = 0; 
+      
+      tarefasConcluidas.forEach((linha) => {
+        if (limiteConcluidas >= 50) return; 
+        
+        let status = linha[8]; 
+        let numeroLinhaSheets = linha[13]; 
+
+        let dataVisual = linha[0] || '';
+        if (dataVisual.includes("-")) { let p = dataVisual.split("-"); dataVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; }
+
+        let dataConclusaoVisual = linha[9] || '-';
+        if (dataConclusaoVisual.includes("-")) { let p = dataConclusaoVisual.split("-"); dataConclusaoVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; }
+
+        // Cores específicas para finalizados
+        let badgeClass = (status === "cancelado") ? "badge-cancelado" : "badge-concluido";
+        let statusHtml = `<span class="badge ${badgeClass}">${status}</span>`;
+        
+        let botaoLink = (linha[6] && linha[6].trim() !== "") ? `<a href="${linha[6]}" target="_blank" class="btn-link-tabela">${svgLink} Acessar Link</a>` : `<span class="btn-link-tabela btn-link-disabled">${svgLink} Acessar Link</span>`;
+
+        let classeOculta = (limiteConcluidas >= 10) ? "linha-extra-historico" : "";
+        let estiloOculto = (limiteConcluidas >= 10 && !historicoExpandido) ? 'style="display: none;"' : '';
+
+        htmlConcluidas += `
+          <tr class="${classeOculta}" ${estiloOculto}>
+            <td>${dataVisual}</td>
+            <td><strong>${dataConclusaoVisual}</strong></td>
+            <td class="td-curta">${linha[1] || ''}</td>
+            <td class="td-curta">${linha[2] || ''}</td>
+            <td class="td-curta" title="${linha[3] || ''}">${linha[3] || ''}</td>
+            <td class="td-curta">${linha[5] || ''}</td>
+            <td class="td-curta">${linha[7] || ''}</td>
+            <td class="td-curta">${linha[11] || ''}</td>
+            <td>${statusHtml}</td>
+            <td>
+              <div class="acoes-container">
+                <span class="icon-action" title="Ver Detalhes" onclick="abrirModal(${numeroLinhaSheets})">${svgEye}</span>
+                ${botaoLink}
+              </div>
+            </td>
+          </tr>`;
+        
+        limiteConcluidas++;
+      });
+
       if (limiteConcluidas > 10) {
-        let textoBotao = historicoExpandido ? '&#9650; Ver Menos' : '&#9660; Ver Mais ' + (limiteConcluidas - 10) + ' tarefas concluídas';
+        let textoBotao = historicoExpandido ? '&#9650; Ver Menos' : '&#9660; Ver Mais ' + (limiteConcluidas - 10) + ' tarefas no histórico';
         htmlConcluidas += `
           <tr class="btn-expandir-historico" onclick="toggleHistorico()">
             <td colspan="10" id="btnSetaHistorico" style="padding: 12px;">${textoBotao}</td>
@@ -395,7 +412,7 @@
       }
 
       tbodyAndamento.innerHTML = htmlAndamento || "<tr><td colspan='10' style='text-align:center; padding:15px;'>Nenhuma demanda ativa.</td></tr>";
-      tbodyConcluidas.innerHTML = htmlConcluidas || "<tr><td colspan='10' style='text-align:center; padding:15px;'>Nenhuma demanda concluída.</td></tr>";
+      tbodyConcluidas.innerHTML = htmlConcluidas || "<tr><td colspan='10' style='text-align:center; padding:15px;'>Nenhum histórico disponível.</td></tr>";
     }
 
     function abrirModal(numeroLinhaSheets) {
@@ -415,7 +432,8 @@
         document.getElementById("edit_motivo").value = linha[11];
         document.getElementById("edit_detalhamento").value = linha[12];
 
-        if(linha[8] === "concluído") {
+        // Ocultar edição para concluídos e cancelados
+        if(linha[8] === "concluído" || linha[8] === "cancelado") {
             document.getElementById("btnSalvarModal").style.display = "none";
         } else {
             document.getElementById("btnSalvarModal").style.display = "inline-flex";
