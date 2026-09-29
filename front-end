@@ -2,28 +2,13 @@
 <html>
 <head>
   <style>
-    /* ========================================== */
-    /* 1. RESET E VARIÁVEIS GERAIS                */
-    /* ========================================== */
     * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, Arial, sans-serif; }
     body { margin: 15px; background-color: #f0f2f5; color: #333; font-size: 11px; }
     
-    .card {
-      background: #ffffff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-      border: 1px solid #e4e7eb; padding: 15px; margin-bottom: 15px;
-    }
+    .card { background: #ffffff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); border: 1px solid #e4e7eb; padding: 15px; margin-bottom: 15px; }
     .card-title { font-size: 14px; font-weight: 600; color: #1a1c29; margin-top: 0; margin-bottom: 12px; }
 
-    /* ========================================== */
-    /* 2. FORMULÁRIO (NOVA DEMANDA)               */
-    /* ========================================== */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 110px 110px 110px 110px 1fr; 
-      gap: 10px 15px; 
-      align-items: start;
-    }
-    
+    .form-grid { display: grid; grid-template-columns: 110px 110px 110px 110px 1fr; gap: 10px 15px; align-items: start; }
     .item-divisao { grid-column: 1; grid-row: 1; }
     .item-marca { grid-column: 2; grid-row: 1; }
     .item-campanha { grid-column: 3; grid-row: 1; }
@@ -33,27 +18,13 @@
 
     .input-group { display: flex; flex-direction: column; gap: 4px; }
     .input-group label { font-size: 10.5px; font-weight: 600; color: #4b5563; }
-    
-    .input-group input, .input-group select, .input-group textarea {
-      border: 1px solid #d1d5db; border-radius: 4px; padding: 4px 8px;
-      font-size: 11px; outline: none; background: #fff; width: 100%; height: 26px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
-      border-color: #2c2f54; box-shadow: 0 0 0 2px rgba(44, 47, 84, 0.1);
-    }
-    
+    .input-group input, .input-group select, .input-group textarea { border: 1px solid #d1d5db; border-radius: 4px; padding: 4px 8px; font-size: 11px; outline: none; background: #fff; width: 100%; height: 26px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: #2c2f54; box-shadow: 0 0 0 2px rgba(44, 47, 84, 0.1); }
     .item-obs textarea { height: 40px; resize: none; padding: 6px 8px; font-family: inherit;}
     .char-counter { text-align: right; font-size: 9.5px; color: #6b7280; margin-top: 2px; }
 
-    /* ========================================== */
-    /* 3. BOTÕES                                  */
-    /* ========================================== */
     .btn-container { text-align: right; margin-top: 10px; border-top: 1px solid #f3f4f6; padding-top: 10px;}
-    .btn {
-      padding: 6px 14px; border: none; border-radius: 4px; font-size: 11px;
-      font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-    }
+    .btn { padding: 6px 14px; border: none; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
     .btn:hover { opacity: 0.9; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     
@@ -61,70 +32,45 @@
     .btn-sucesso { background-color: #10b981; color: white; }
     .btn-cancelar { background-color: #ef4444; color: white; }
 
-    /* ========================================== */
-    /* 4. TABELAS E BADGES                        */
-    /* ========================================== */
     .table-responsive { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 11px; }
     th { padding: 10px 8px; font-weight: 600; color: #4b5563; border-bottom: 2px solid #e5e7eb; white-space: nowrap; }
     td { padding: 10px 8px; color: #1f2937; border-bottom: 1px solid #f3f4f6; vertical-align: middle; }
     tbody tr:nth-child(even) { background-color: #f9fafb; }
     tbody tr:hover { background-color: #f3f4f6; }
-    
     .td-curta { max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* Lógica da barra "Ver Mais" */
     .linha-oculta { display: none; }
     .btn-expandir-historico { cursor: pointer; color: #2c2f54; font-weight: bold; background-color: #f3f4f6; text-align: center; }
     .btn-expandir-historico:hover { background-color: #e5e7eb; }
 
-    /* NOVA PALETA DE CORES DOS STATUS */
     .badge { padding: 4px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; display: inline-block; text-align: center; min-width: 75px; }
-    .badge-nao-iniciado { background-color: #ef4444; color: white; } /* Vermelho */
-    .badge-fazendo { background-color: #eab308; color: white; } /* Amarelo */
-    .badge-aguardando { background-color: #f97316; color: white; } /* Laranja */
-    .badge-briefing { background-color: #3b82f6; color: white; } /* Azul */
-    .badge-cancelado { background-color: #a855f7; color: white; } /* Roxo */
-    .badge-concluido { background-color: #10b981; color: white; } /* Verde */
+    .badge-nao-iniciado { background-color: #ef4444; color: white; } 
+    .badge-fazendo { background-color: #eab308; color: white; } 
+    .badge-aguardando { background-color: #f97316; color: white; } 
+    .badge-briefing { background-color: #3b82f6; color: white; } 
+    .badge-cancelado { background-color: #a855f7; color: white; } 
+    .badge-concluido { background-color: #10b981; color: white; } 
 
     .acoes-container { display: flex; align-items: center; gap: 10px; }
     .icon-action { cursor: pointer; color: #4b5563; display: flex; align-items: center; }
     .icon-action:hover { color: #111827; }
     .icon-action svg { width: 14px; height: 14px; }
     
-    .btn-link-tabela {
-      background-color: #f3f4f6; border: 1px solid #d1d5db; border-radius: 4px;
-      padding: 4px 6px; font-size: 10.5px; color: #374151; font-weight: 600;
-      text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
-    }
+    .btn-link-tabela { background-color: #f3f4f6; border: 1px solid #d1d5db; border-radius: 4px; padding: 4px 6px; font-size: 10.5px; color: #374151; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
     .btn-link-tabela:hover { background-color: #e5e7eb; text-decoration: none; }
     .btn-link-disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 
-    /* ========================================== */
-    /* 5. MODAL (POP-UP) ATUALIZADO               */
-    /* ========================================== */
-    .fundo-escuro {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.5); z-index: 1000; backdrop-filter: blur(2px);
-    }
-    .janela-modal {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      background: white; padding: 20px 25px; border-radius: 8px;
-      width: 95%; max-width: 650px; 
-      max-height: 90vh; overflow-y: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+    .fundo-escuro { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; backdrop-filter: blur(2px); }
+    .janela-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px 25px; border-radius: 8px; width: 95%; max-width: 650px; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
     .janela-modal h3 { margin-top: 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 12px; font-size: 14px; color: #111827;}
-    
     .modal-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 15px; }
     .modal-col-full { grid-column: span 3; } 
-    
     .campo-leitura { background-color: #f3f4f6 !important; color: #6b7280 !important; cursor: not-allowed; }
   </style>
 </head>
 <body>
 
-  <!-- CARTÃO: NOVA DEMANDA -->
   <div class="card">
     <h3 class="card-title">Nova Demanda</h3>
     <div class="form-grid">
@@ -135,12 +81,10 @@
         </select>
       </div>
       <div class="input-group item-marca">
-        <label>Marca</label>
-        <input type="text" id="novo_marca">
+        <label>Marca</label><input type="text" id="novo_marca">
       </div>
       <div class="input-group item-campanha">
-        <label>Campanha</label>
-        <input type="text" id="novo_campanha">
+        <label>Campanha</label><input type="text" id="novo_campanha">
       </div>
       <div class="input-group item-tipo">
         <label>Tipo de Demanda</label>
@@ -149,8 +93,7 @@
         </select>
       </div>
       <div class="input-group item-link">
-        <label>Link</label>
-        <input type="text" id="novo_link" placeholder="Link">
+        <label>Link</label><input type="text" id="novo_link" placeholder="Link">
       </div>
       <div class="input-group item-obs">
         <label>Observação</label>
@@ -158,7 +101,6 @@
         <div class="char-counter" id="charCount">0/300</div>
       </div>
     </div>
-    
     <div class="btn-container">
       <button class="btn btn-primario" onclick="criarSolicitacao()" id="btnCriar">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
@@ -167,7 +109,6 @@
     </div>
   </div>
 
-  <!-- CARTÃO: MONITORAMENTO (ATIVAS) -->
   <div class="card">
     <h3 class="card-title">Monitoramento de Demandas</h3>
     <div class="table-responsive">
@@ -183,7 +124,6 @@
     </div>
   </div>
 
-  <!-- CARTÃO: HISTÓRICO (CONCLUÍDAS/CANCELADAS) -->
   <div class="card">
     <h3 class="card-title">Histórico (Últimas 50)</h3>
     <div class="table-responsive">
@@ -199,43 +139,22 @@
     </div>
   </div>
 
-  <!-- MODAL DE EDIÇÃO -->
   <div id="modalEdicao" class="fundo-escuro">
     <div class="janela-modal">
       <h3>Detalhes da Demanda</h3>
       <input type="hidden" id="edit_linha">
-      
       <div class="modal-grid">
         <div class="input-group"><label>Data de Criação</label><input type="text" id="edit_data" class="campo-leitura" readonly></div>
         <div class="input-group"><label>Solicitante</label><input type="text" id="edit_solicitante" class="campo-leitura" readonly></div>
         <div class="input-group"><label>Responsável</label><input type="text" id="edit_responsavel"></div>
-        
         <div class="input-group"><label>Divisão</label><select id="edit_divisao"><option value=""></option><option value="DL">DL</option><option value="DPGP">DPGP</option><option value="DPP">DPP</option><option value="LBD">LBD</option><option value="CORP">CORP</option></select></div>
         <div class="input-group"><label>Marca</label><input type="text" id="edit_marca"></div>
         <div class="input-group"><label>Campanha</label><input type="text" id="edit_campanha"></div>
-        
         <div class="input-group"><label>Tipo de Demanda</label><select id="edit_tipoDemanda"><option value=""></option><option value="Atualizar PM">Atualizar PM</option><option value="Atualizar base">Atualizar base</option><option value="Ajuste Dash">Ajuste Dash</option><option value="Ajuste PV">Ajuste PV</option><option value="Automatização">Automatização</option><option value="Novo PM">Novo PM</option><option value="RM - add dicionario">RM - add dicionario</option><option value="RM dando erro">RM dando erro</option></select></div>
         <div class="input-group">
           <label>Motivo do Ajuste</label>
           <select id="edit_motivo">
-            <option value=""></option>
-            <option value="nah">nah</option>
-            <option value="falso-positivo">falso-positivo</option>
-            <option value="erro preenchimento plano">erro preenchimento plano</option>
-            <option value="erro preenchimento output">erro preenchimento output</option>
-            <option value="erro preenchimento base manual">erro preenchimento base manual</option>
-            <option value="diferença output/plano">diferença output/plano</option>
-            <option value="faltou envio PM">faltou envio PM</option>
-            <option value="reprocessamento">reprocessamento</option>
-            <option value="sem código hash">sem código hash</option>
-            <option value="hash duplicado">hash duplicado</option>
-            <option value="hash trocado">hash trocado</option>
-            <option value="Erro de preenchimento planilha de alcance">Erro de preenchimento planilha de alcance</option>
-            <option value="Erro na formula planilha de alcance">Erro na formula planilha de alcance</option>
-            <option value="Plano desatualizado">Plano desatualizado</option>
-            <option value="Data Geeks">Data Geeks</option>
-            <option value="Ajuste dash">Ajuste dash</option>
-            <option value="outros (especificar ao lado)">outros (especificar ao lado)</option>
+            <option value=""></option><option value="nah">nah</option><option value="falso-positivo">falso-positivo</option><option value="erro preenchimento plano">erro preenchimento plano</option><option value="erro preenchimento output">erro preenchimento output</option><option value="erro preenchimento base manual">erro preenchimento base manual</option><option value="diferença output/plano">diferença output/plano</option><option value="faltou envio PM">faltou envio PM</option><option value="reprocessamento">reprocessamento</option><option value="sem código hash">sem código hash</option><option value="hash duplicado">hash duplicado</option><option value="hash trocado">hash trocado</option><option value="Erro de preenchimento planilha de alcance">Erro de preenchimento planilha de alcance</option><option value="Erro na formula planilha de alcance">Erro na formula planilha de alcance</option><option value="Plano desatualizado">Plano desatualizado</option><option value="Data Geeks">Data Geeks</option><option value="Ajuste dash">Ajuste dash</option><option value="outros (especificar ao lado)">outros (especificar ao lado)</option>
           </select>
         </div>
         <div class="input-group">
@@ -244,12 +163,10 @@
             <option value="não iniciado">não iniciado</option><option value="fazendo">fazendo</option><option value="aguardando resposta">aguardando resposta</option><option value="concluído">concluído</option><option value="cancelado">cancelado</option><option value="briefing incompleto">briefing incompleto</option>
           </select>
         </div>
-        
         <div class="input-group modal-col-full"><label>Link Associado</label><input type="text" id="edit_link"></div>
         <div class="input-group modal-col-full"><label>Observação Original</label><input type="text" id="edit_observacao"></div>
         <div class="input-group modal-col-full"><label>Detalhamento da Execução</label><input type="text" id="edit_detalhamento"></div>
       </div>
-
       <div class="btn-container">
         <button class="btn btn-cancelar" onclick="fecharModal()">Fechar</button>
         <button class="btn btn-sucesso" onclick="salvarEdicao()" id="btnSalvarModal">Salvar Alterações</button>
@@ -281,15 +198,23 @@
       });
       let btnSeta = document.getElementById('btnSetaHistorico');
       if (btnSeta) {
-        btnSeta.innerHTML = historicoExpandido ? '&#9650; Ver Menos' : '&#9660; Ver Mais ' + linhasOcultas.length + ' tarefas concluídas';
+        btnSeta.innerHTML = historicoExpandido ? '&#9650; Ver Menos' : '&#9660; Ver Mais ' + linhasOcultas.length + ' tarefas no histórico';
       }
     }
 
     function carregarDados() {
-      google.script.run.withSuccessHandler(montarTabelas).buscarDados();
+      // CORREÇÃO: Adicionado tratamento de erro visual. Se o servidor falhar, mostrará o motivo na tela.
+      google.script.run
+        .withSuccessHandler(montarTabelas)
+        .withFailureHandler(function(erro) {
+            document.getElementById("corpoAndamento").innerHTML = `<tr><td colspan='10' style='color:red; text-align:center;'><b>Erro no Servidor:</b> ${erro.message}<br>Verifique se os cabeçalhos da planilha estão corretos.</td></tr>`;
+        })
+        .buscarDados();
     }
 
     function montarTabelas(dadosArray) {
+      if (!dadosArray || !Array.isArray(dadosArray)) return;
+      
       dadosGlobais = dadosArray; 
       let tbodyAndamento = document.getElementById("corpoAndamento");
       let tbodyConcluidas = document.getElementById("corpoConcluidas");
@@ -300,7 +225,6 @@
       let tarefasConcluidas = [];
 
       dadosArray.forEach((linha) => {
-        // Envia "concluído" e "cancelado" para o Histórico
         if (linha[8] === "concluído" || linha[8] === "cancelado") {
           tarefasConcluidas.push(linha);
         } else {
@@ -308,30 +232,30 @@
         }
       });
 
-      // Inverte para exibir histórico do mais novo pro mais velho
       tarefasConcluidas.reverse();
 
-      // ==========================================
-      // MONTAR TABELA ATIVAS (Mais antigas primeiro)
-      // ==========================================
       tarefasAtivas.forEach((linha) => {
         let status = linha[8]; 
         let numeroLinhaSheets = linha[13]; 
 
-        let dataVisual = linha[0] || '';
+        // Proteção contra quebras caso o valor venha como número puro da folha Excel
+        let dataVisual = linha[0] ? String(linha[0]) : '';
         if (dataVisual.includes("-")) {
            let p = dataVisual.split("-");
-           dataVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; 
+           if (p.length === 3) dataVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; 
         }
 
-        // Mapeamento das Cores Solicitadas
         let badgeClass = "badge-nao-iniciado"; 
         if (status === "fazendo") badgeClass = "badge-fazendo";
         else if (status === "aguardando resposta") badgeClass = "badge-aguardando";
         else if (status === "briefing incompleto") badgeClass = "badge-briefing";
         
         let statusHtml = `<span class="badge ${badgeClass}">${status || 'não iniciado'}</span>`;
-        let botaoLink = (linha[6] && linha[6].trim() !== "") ? `<a href="${linha[6]}" target="_blank" class="btn-link-tabela">${svgLink} Acessar Link</a>` : `<span class="btn-link-tabela btn-link-disabled">${svgLink} Acessar Link</span>`;
+        
+        let linkStr = linha[6] ? String(linha[6]).trim() : "";
+        let botaoLink = (linkStr !== "") ? 
+          `<a href="${linkStr}" target="_blank" class="btn-link-tabela">${svgLink} Acessar Link</a>` : 
+          `<span class="btn-link-tabela btn-link-disabled">${svgLink} Acessar Link</span>`;
 
         htmlAndamento += `
           <tr>
@@ -354,9 +278,6 @@
           </tr>`;
       });
 
-      // ==========================================
-      // MONTAR TABELA HISTÓRICO (Concluído/Cancelado)
-      // ==========================================
       let limiteConcluidas = 0; 
       
       tarefasConcluidas.forEach((linha) => {
@@ -365,17 +286,25 @@
         let status = linha[8]; 
         let numeroLinhaSheets = linha[13]; 
 
-        let dataVisual = linha[0] || '';
-        if (dataVisual.includes("-")) { let p = dataVisual.split("-"); dataVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; }
+        let dataVisual = linha[0] ? String(linha[0]) : '';
+        if (dataVisual.includes("-")) { 
+            let p = dataVisual.split("-"); 
+            if(p.length === 3) dataVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; 
+        }
 
-        let dataConclusaoVisual = linha[9] || '-';
-        if (dataConclusaoVisual.includes("-")) { let p = dataConclusaoVisual.split("-"); dataConclusaoVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; }
+        let dataConclusaoVisual = linha[9] ? String(linha[9]) : '-';
+        if (dataConclusaoVisual !== '-' && dataConclusaoVisual.includes("-")) { 
+            let p = dataConclusaoVisual.split("-"); 
+            if(p.length === 3) dataConclusaoVisual = `${p[2]}/${p[1]}/${p[0].substring(2)}`; 
+        }
 
-        // Cores específicas para finalizados
         let badgeClass = (status === "cancelado") ? "badge-cancelado" : "badge-concluido";
         let statusHtml = `<span class="badge ${badgeClass}">${status}</span>`;
         
-        let botaoLink = (linha[6] && linha[6].trim() !== "") ? `<a href="${linha[6]}" target="_blank" class="btn-link-tabela">${svgLink} Acessar Link</a>` : `<span class="btn-link-tabela btn-link-disabled">${svgLink} Acessar Link</span>`;
+        let linkStr = linha[6] ? String(linha[6]).trim() : "";
+        let botaoLink = (linkStr !== "") ? 
+          `<a href="${linkStr}" target="_blank" class="btn-link-tabela">${svgLink} Acessar Link</a>` : 
+          `<span class="btn-link-tabela btn-link-disabled">${svgLink} Acessar Link</span>`;
 
         let classeOculta = (limiteConcluidas >= 10) ? "linha-extra-historico" : "";
         let estiloOculto = (limiteConcluidas >= 10 && !historicoExpandido) ? 'style="display: none;"' : '';
@@ -432,7 +361,6 @@
         document.getElementById("edit_motivo").value = linha[11];
         document.getElementById("edit_detalhamento").value = linha[12];
 
-        // Ocultar edição para concluídos e cancelados
         if(linha[8] === "concluído" || linha[8] === "cancelado") {
             document.getElementById("btnSalvarModal").style.display = "none";
         } else {
