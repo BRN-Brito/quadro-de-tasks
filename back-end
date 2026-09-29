@@ -4,7 +4,6 @@ var ID_PLANILHA = "id";
 // Substitua pelo nome exato da aba onde os dados serão salvos
 var NOME_ABA = "NOME_DA_SUA_ABA"; 
 
-
 function doGet() {
   var html = HtmlService.createHtmlOutputFromFile('index');
   html.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
@@ -13,7 +12,6 @@ function doGet() {
 
 function buscarDados() {
   var planilha = SpreadsheetApp.openById(ID_PLANILHA).getSheetByName(NOME_ABA);
-  
   var dados = planilha.getDataRange().getValues();
   var dadosLimpos = [];
   
@@ -21,17 +19,14 @@ function buscarDados() {
     var linha = dados[i];
     if (linha.join("").trim() === "") continue;
     
-    // Formata a Data de Criação (Índice 0)
-    if (linha[0] && linha[0] instanceof Date) {
-      linha[0] = Utilities.formatDate(linha[0], Session.getScriptTimeZone(), "yyyy-MM-dd");
+    // CORREÇÃO CRÍTICA: Varre a linha inteira à procura de objetos do tipo Date
+    // Isso impede que datas acidentais noutras colunas bloqueiem a comunicação.
+    for (var col = 0; col < linha.length; col++) {
+      if (linha[col] instanceof Date) {
+        linha[col] = Utilities.formatDate(linha[col], Session.getScriptTimeZone(), "yyyy-MM-dd");
+      }
     }
     
-    // Formata a Data de Conclusão (Índice 9)
-    if (linha[9] && linha[9] instanceof Date) {
-      linha[9] = Utilities.formatDate(linha[9], Session.getScriptTimeZone(), "yyyy-MM-dd");
-    }
-    
-    // Adiciona o número real da linha do Sheets na 14ª posição (índice 13)
     linha.push(i + 1); 
     dadosLimpos.push(linha);
   }
@@ -42,9 +37,7 @@ function salvarNaPlanilha(dados) {
   var lock = LockService.getScriptLock();
   try {
     lock.waitLock(10000);
-    
     var planilha = SpreadsheetApp.openById(ID_PLANILHA).getSheetByName(NOME_ABA);
-    
     var dataAtual = new Date();
     var email = Session.getActiveUser().getEmail();
     var nomeSolicitante = "Usuário Desconhecido";
@@ -56,13 +49,10 @@ function salvarNaPlanilha(dados) {
       }).join(' ');
     }
 
-    // Grava as 13 colunas da tarefa
     planilha.appendRow([
       dataAtual, dados.divisao, dados.marca, dados.campanha, dados.tipoDemanda, nomeSolicitante,
       dados.link, "", "não iniciado", "", dados.observacao, "", ""
     ]);
-    
-    // Insere uma linha totalmente em branco abaixo (13 colunas vazias)
     planilha.appendRow(Array(13).fill(""));
     
     SpreadsheetApp.flush();
@@ -74,14 +64,11 @@ function atualizarNaPlanilha(dados, numeroLinha) {
   var lock = LockService.getScriptLock();
   try {
     lock.waitLock(10000);
-    
     var planilha = SpreadsheetApp.openById(ID_PLANILHA).getSheetByName(NOME_ABA);
-    
     var intervalo = planilha.getRange(numeroLinha, 1, 1, 13);
     var linhaAtual = intervalo.getValues()[0];
     var dataConclusaoSalva = linhaAtual[9]; 
     
-    // Define que tanto concluído quanto cancelado encerram a data
     var statusFinalizado = (dados.status === "concluído" || dados.status === "cancelado");
     
     if (statusFinalizado && (!dataConclusaoSalva || dataConclusaoSalva === "")) {
